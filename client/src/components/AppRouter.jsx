@@ -5,16 +5,16 @@ import Basket from '../pages/Basket'
 import DevicePage from '../pages/DevicePage'
 import Shop from '../pages/Shop'
 import { Context } from '../index'
+import AdminPanel from '../pages/AdminPanel'
 
 const AppRouter = () => {
 	const {user} = useContext(Context)
 	
-	console.log(user)
 	return (
 		<Routes>
 			{
 				user.isAuth && (<>
-						<Route path='/admin' element={<Auth />}/>
+						<Route path='/admin' element={<AdminPanel />}/>
 						<Route path='/basket' element={<Basket />}/>
 					</>)
 			}
