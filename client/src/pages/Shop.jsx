@@ -1,10 +1,19 @@
 import React from 'react'
+import { Col, Container } from 'react-bootstrap'
+import TypeBar from '../components/TypeBar'
 
 const Shop = () => {
 	return (
-		<div>
-			<h1>shop</h1>
-		</div>
+		<Container>
+			<div className='mt-3'>
+				<Col md={3}>
+					<TypeBar/>
+				</Col>
+				<Col md={9}>
+				
+				</Col>
+			</div>
+		</Container>
 	)
 }
 
