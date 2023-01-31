@@ -1,18 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Container, Image } from 'react-bootstrap'
-import { useContext } from 'react'
-import { Context } from '../index'
 import bigStar from '../assets/bigStar.png'
+import { useParams } from 'react-router-dom'
+import { fetchOneDevice } from '../http/deviseAPI'
 
 const DevicePage = () => {
-	const {device} = useContext(Context)
-	const description = [
-		{id: 1, title: 'qwe', description: 'asd'},
-		{id: 2, title: 'qwe', description: 'asd'},
-		{id: 3, title: 'qwe', description: 'asd'},
-		{id: 4, title: 'qwe', description: 'asd'},
-		{id: 5, title: 'qwe', description: 'asd'}
-	]
+	const [device, setDevice] = useState({info: []})
+	const { id } = useParams()
+	
 	const bigStarStyle = {
 		background: `url(${bigStar}) no-repeat center center`,
 		width: 240,
@@ -20,12 +15,16 @@ const DevicePage = () => {
 		backgroundSize: 'cover',
 		fontSize: 64
 	}
-	// const device = {id: 1, name: 'name', price: 222, rating: 5, img: 'asdsa'}
+	
+	useEffect(() => {
+		fetchOneDevice(id).then(data => setDevice(data))
+	}, [])
+	
 	return (
 		<Container className='mt-3'>
 			<div className='d-flex gap-2'>
 				<Col md={4}>
-					<Image width={300} height={300} src={device.img}/>
+					<Image width={300} height={300} src={process.env.REACT_APP_API_URL + device.img}/>
 				</Col>
 				<Col md={4}>
 					<div className='d-flex gap-2'>
@@ -50,7 +49,7 @@ const DevicePage = () => {
 			</div>
 			<div className='d-flex gap-2 flex-column mt-3'>
 				<h1>Характеристики</h1>
-				{description.map((info, index) =>
+				{device.info.map((info, index) =>
 					<div
 						className='d-flex gap-2'
 						key={info.id}

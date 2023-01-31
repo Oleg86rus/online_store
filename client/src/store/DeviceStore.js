@@ -2,34 +2,14 @@ import { makeAutoObservable } from 'mobx'
 
 export default class DeviceStore {
 	constructor () {
-		this._types = [
-			{id: 1, name: 'Холодильники'},
-			{id: 2, name: 'Смартфоны'},
-			{id: 3, name: 'Ноутбуки'},
-			{id: 4, name: 'Планшеты'}
-		]
-		this._brands = [
-			{id: 1, name: 'Apple'},
-			{id: 2, name: 'Lenovo'},
-			{id: 3, name: 'Samsung'},
-			{id: 4, name: 'Asus'}
-		]
-		this._devices = [
-			{id: 1, name: '12pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 2, name: '13pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 3, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 4, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 5, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 6, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 7, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 8, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 9, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 10, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 11, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`},
-			{id: 12, name: '11pro', price: 100000, rating: 5, img: `https://www.hdretail.ru/upload/iblock/8d0/8d01c02a7a68c45e7d021d9d44efab9f.jpg`}
-		]
+		this._types = []
+		this._brands = []
+		this._devices = []
 		this._selectedType = {}
 		this._selectedBrand = {}
+		this._page = 1
+		this._totalCount = 0
+		this._limit = 3
 		makeAutoObservable(this)
 	}
 	
@@ -41,16 +21,26 @@ export default class DeviceStore {
 		this._brands = brands
 	}
 	
-	setDevice(devices) {
+	setDevices(devices) {
 		this._devices = devices
 	}
 	
 	setSelectedType(type) {
+		this.setPage(1)
 		this._selectedType = type
 	}
 	
 	setSelectedBrand(brand) {
+		this.setPage(1)
 		this._selectedBrand = brand
+	}
+	
+	setPage(page) {
+		this._page = page
+	}
+	
+	setTotalCount(totalCount) {
+		this._totalCount = totalCount
 	}
 	
 	get types() {
@@ -71,5 +61,17 @@ export default class DeviceStore {
 	
 	get selectedBrand() {
 		return this._selectedBrand
+	}
+	
+	get page() {
+		return this._page
+	}
+	
+	get totalCount() {
+		return this._totalCount
+	}
+	
+	get limit() {
+		return this._limit
 	}
 }
